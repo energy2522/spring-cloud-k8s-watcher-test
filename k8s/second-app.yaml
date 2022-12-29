@@ -1,0 +1,67 @@
+# service-specific configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: second-config-server
+  labels:
+    spring.cloud.kubernetes.config: "true"
+data:
+  app.lang: es
+---
+# NodePort to send a request to the service
+kind: Service
+apiVersion: v1
+metadata:
+  name: second-server-app-service
+spec:
+  type: NodePort
+  selector:
+    app: second-server-app
+  ports:
+    - nodePort: 30164
+      port: 8080
+      targetPort: 8080
+---
+# service for watcher
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: second-server-app
+  name: second-config-server
+  annotations:
+    boot.spring.io/actuator: http://:8080/actuator
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: second-server-app
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-server-app-deployment
+  labels:
+    app: second-server-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-server-app
+  template:
+    metadata:
+      labels:
+        app: second-server-app
+    spec:
+      containers:
+        - name: second-server-app
+          image: server-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: second-config-server

@@ -1,0 +1,11 @@
+# shared configmap
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: k8s-config-server
+  labels:
+    spring.cloud.kubernetes.config: "true"
+  annotations:
+    spring.cloud.kubernetes.configmap.apps: "first-config-server, second-config-server"
+data:
+  app.user.name: Inna
