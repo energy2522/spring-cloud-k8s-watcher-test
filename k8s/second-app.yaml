@@ -1,3 +1,14 @@
+# service-specific secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: second-config-server
+  labels:
+    spring.cloud.kubernetes.config: "true"
+type: Opaque
+data:
+  app.user.username: YWRtaW4=
+---
 # service-specific configmap
 apiVersion: v1
 kind: ConfigMap

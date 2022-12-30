@@ -2,3 +2,5 @@ app:
   lang: en
   user:
     name: Jhon
+    username: default
+    password: default

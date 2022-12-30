@@ -1,5 +1,5 @@
 # About this project
-This project shows how to use the spring-cloud-kubernetes configmap in integration with the spring-watcher to load properties from a kubernetes configmap and refresh them without restarting the pod.
+This project shows how to use the spring-cloud-kubernetes configmap and secret in integration with the spring-watcher to load properties from a kubernetes configmap and refresh them without restarting the pod.
 
 # How to use
 To deploy this demo you need to have a Kubernetes cluster or minikube local cluster.
@@ -20,12 +20,13 @@ NOTES: all these files are configured to work in the `default` namespace.
 ## Deploy application
 To deploy the application you need to execute:
 1. ./start-minikube.sh
-2./build-image.sh
-3.kubectl apply -f k8s/roles.yaml
-4.kubectl apply -f k8s/watcher.yaml
-5.(optional) kubectl apply -f  k8s/configmap.yaml
-6.kubectl apply -f k8s/first-app.yaml
-7.(optional) kubectl apply -f k8s/second-app.yaml
+2. ./build-image.sh
+3. kubectl apply -f k8s/roles.yaml
+4. kubectl apply -f k8s/watcher.yaml
+5. (optional) kubectl apply -f  k8s/configmap.yaml
+6. (optional) kubectl apply -f k8s/secret.yaml
+7. kubectl apply -f k8s/first-app.yaml
+8. (optional) kubectl apply -f k8s/second-app.yaml
 
 ### Logs
 After deploying the application you can review pod logs to see which properties each application has on startup.
@@ -39,6 +40,18 @@ After 2 mins you can go to the service pod logs and find a log that refreshes th
 ## Shared configmap update
 To demo how 2 services are updated after changes in one shared configmap you need to have deployed `second-app.yaml` and `configmap.yaml`.
 When they are deployed, go to the `configmap.yaml` and change the value there, then execute `kubectl apply -f k8s/configmap.yaml`.
+After that, you can go to the watcher pod logs to see that the refresh request is scheduled in 12000 milliseconds (2 mins).
+In 2 mins, you can go to services pod logs and see that refresh was executed.
+
+## Secret update (one application)
+To demo how spring boot refresh works after secrets are changed you need to update secret value in the `first-app.yaml` file.
+Then execute `kubectl apply -f k8s/first-app.yaml`.
+Then you can go to the watcher pod logs and find the log that the refresh request is scheduled in 12000 milliseconds (2 mins)
+After 2 mins you can go to the service pod logs and find a log that refreshes the event that was executed and see the value.
+
+## Shared secret update
+To demo how 2 services are updated after changes in one shared secret you need to have deployed `second-app.yaml` and `secret.yaml`.
+When they are deployed, go to the `secret.yaml` and change the value there, then execute `kubectl apply -f k8s/secret.yaml`.
 After that, you can go to the watcher pod logs to see that the refresh request is scheduled in 12000 milliseconds (2 mins).
 In 2 mins, you can go to services pod logs and see that refresh was executed.
 
