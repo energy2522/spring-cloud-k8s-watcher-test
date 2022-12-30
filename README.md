@@ -1,5 +1,5 @@
 # About this project
-This project shows how to use the spring-cloud-kubernetes configmap in integration with the spring-watcher to load properties from a kubernetes configmap and refresh them without restarting the pod.
+This project shows how to use the spring-cloud-kubernetes configmap and secret in integration with the spring-watcher to load properties from a kubernetes configmap and refresh them without restarting the pod.
 
 # How to use
 To deploy this demo you need to have a Kubernetes cluster or minikube local cluster.
