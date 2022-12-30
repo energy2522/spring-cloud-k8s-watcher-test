@@ -5,11 +5,11 @@ spring:
     kubernetes:
       config:
         sources:
-          - name: k8s-config-server
+          - name: shared-configmap
           - name: ${spring.application.name}
       secrets:
         sources:
-          - name: k8s-config-server
+          - name: shared-secret
           - name: ${spring.application.name}
         enable-api: true
 management:

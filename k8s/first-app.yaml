@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: first-config-server
+  labels:
+    spring.cloud.kubernetes.config: "true"
 type: Opaque
 data:
   app.user.username: dXNlcgo=

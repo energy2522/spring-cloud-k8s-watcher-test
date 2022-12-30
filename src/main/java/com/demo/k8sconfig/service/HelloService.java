@@ -24,6 +24,12 @@ public class HelloService {
     @Value("${app.user.name}")
     private String name;
 
+    @Value("${app.user.username}")
+    private String username;
+
+    @Value("${app.user.password}")
+    private String password;
+
     public HelloService() {
         this.languageHelloMap = new HashMap<>();
 
@@ -46,8 +52,10 @@ public class HelloService {
         log.info("refresh has happened");
         log.info("^^^^^^^^^^^^^^^^^^^^^");
         log.info("^^^^^^^^^^^^^^^^^^^^^");
-        log.info("lang = " + lang);
-        log.info("name = " + name);
+        log.info("lang = {}", lang);
+        log.info("name = {}", name);
+        log.info("username = {}", username);
+        log.info("password = {}", password);
     }
 
 }
