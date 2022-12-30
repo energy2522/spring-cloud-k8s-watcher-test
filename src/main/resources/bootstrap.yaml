@@ -7,6 +7,10 @@ spring:
         sources:
           - name: k8s-config-server
           - name: ${spring.application.name}
+      secrets:
+        sources:
+          - name: ${spring.application.name}
+        enable-api: true
 management:
   endpoints:
     web:

@@ -1,3 +1,12 @@
+# service-specific secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: first-config-server
+type: Opaque
+data:
+  app.user.username: YWRtaW4=
+---
 # service-specific configmap
 apiVersion: v1
 kind: ConfigMap
